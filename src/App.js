@@ -1,25 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import {useEffect, useState} from "react";
+import Footer from "./components/Footer/Footer";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [name, setName] = useState('Maxim');
+    const [surname, setSurname] = useState('Ivanov');
+    const [showFooter, setShowFooter] = useState(true);
+
+    useEffect(() => {
+        console.log('check mount');
+    }, []);
+
+    useEffect(() => {
+        console.log('name or surname did updated');
+    }, [name, surname]);
+
+    const changeName = () => {
+        const answer = prompt('Enter the name:');
+        setName(prev => answer === null ? prev : answer);
+    }
+
+    const changeSurname = () => {
+        const answer = prompt('Enter the surname:');
+        setSurname(prev => answer === null ? prev : answer);
+    }
+
+    const removeFooter = () => {
+        setShowFooter(false);
+    }
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <p>Hello, {name} {surname}!</p>
+                <button onClick={changeName}>Change name</button>
+                <button onClick={changeSurname}>Change surname</button>
+                <button onClick={removeFooter}>Remove Footer</button>
+            </header>
+            {showFooter && <Footer />}
+        </div>
+    );
 }
 
 export default App;
